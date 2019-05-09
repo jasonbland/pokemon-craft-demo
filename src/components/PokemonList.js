@@ -10,13 +10,43 @@ import 'semantic-ui-css/semantic.min.css';
 
 class PokemonList extends React.Component {
   state = {
-    data: [],
-    finished: false
+    start: 0,
+    end: 20,
+    scrollPosition: 0
   };
 
-  componentDidMount() {
-    for (let i = 1; i < 20; i++) {
-      this.props.fetchPokemon(i);
+  componentWillMount() {
+    if (!this.props.pokemon.length) {
+      this.loadPokemons();
+    }
+    window.addEventListener('scroll', this.listenToScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.listenToScroll);
+  }
+
+  listenToScroll = () => {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = winScroll / height;
+
+    this.setState({
+      scrollPosition: scrolled
+    });
+
+    if (this.state.scrollPosition > 0.8) {
+      console.log(this.state.scrollPosition);
+      this.setState(prevState => ({ start: prevState.end + 1, end: prevState.end + 10 }));
+      this.loadPokemons();
+    }
+  };
+
+  loadPokemons() {
+    if (this.state.end < 150) {
+      for (let i = this.state.start; i <= this.state.end; i++) {
+        this.props.fetchPokemon(i);
+      }
     }
   }
 
