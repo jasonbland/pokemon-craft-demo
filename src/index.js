@@ -8,6 +8,7 @@ import ReduxThunk from 'redux-thunk';
 import reducers from './reducers';
 
 import PokemonList from './components/PokemonList';
+import PokemonDetails from './components/PokemonDetails';
 import history from './history';
 
 import 'semantic-ui-css/semantic.min.css';
@@ -19,6 +20,7 @@ ReactDOM.render(
     <Router history={history}>
       <div>
         <Switch>
+          <Route path="/pokemon/detail/:id" component={PokemonDetails} exact />
           <Route path="/" component={PokemonList} exact />
         </Switch>
       </div>
