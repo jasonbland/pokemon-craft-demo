@@ -10,7 +10,7 @@ import 'semantic-ui-css/semantic.min.css';
 
 class PokemonList extends React.Component {
   state = {
-    start: 0,
+    start: 1,
     end: 20,
     scrollPosition: 0
   };
@@ -35,8 +35,7 @@ class PokemonList extends React.Component {
       scrollPosition: scrolled
     });
 
-    if (this.state.scrollPosition > 0.8) {
-      console.log(this.state.scrollPosition);
+    if (this.state.scrollPosition >= 0.9) {
       this.setState(prevState => ({ start: prevState.end + 1, end: prevState.end + 10 }));
       this.loadPokemons();
     }
@@ -52,7 +51,7 @@ class PokemonList extends React.Component {
 
   renderCards() {
     return this.props.pokemon.map(item => {
-      return <Card item={item} key={item.name} />;
+      return <Card item={item} key={item.id} />;
     });
   }
 
