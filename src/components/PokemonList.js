@@ -1,39 +1,28 @@
 import React from 'react';
-import axios from 'axios';
-import image from './white-image.png';
+import { connect } from 'react-redux';
+import { fetchPokemon } from '../actions';
+// import image from '../white-image.png';
 import Card from './Card';
 
 import 'semantic-ui-css/semantic.min.css';
 // import '../style/style.css';
-import './App.css';
+// import './App.css';
 
-class App extends React.Component {
+class PokemonList extends React.Component {
   state = {
     data: [],
     finished: false
   };
 
   componentDidMount() {
-    this.getPokemon();
-  }
-
-  async getPokemon() {
-    try {
-      for (let i = 1; i < 20; i++) {
-        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${i}/`);
-        this.setState(prevState => ({
-          data: [...prevState.data, response.data]
-        }));
-      }
-      console.log(this.state.data);
-    } catch (error) {
-      console.log(error);
+    for (let i = 1; i < 20; i++) {
+      this.props.fetchPokemon(i);
     }
   }
 
   renderCards() {
-    return this.state.data.map(item => {
-      return <Card item={item} />;
+    return this.props.pokemon.map(item => {
+      return <Card item={item} key={item.name} />;
     });
   }
 
@@ -61,4 +50,13 @@ const Controls = {
   margin: 'auto'
 };
 
-export default App;
+const mapStateToProps = ({ pokemon }) => {
+  return {
+    pokemon
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { fetchPokemon }
+)(PokemonList);
