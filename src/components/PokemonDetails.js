@@ -1,17 +1,40 @@
 import React from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+
+import GoogleMap from './GoogleMap';
+
 import { fetchPokemon } from '../actions';
 
 export class PokemonDetails extends React.Component {
+  componentDidMount() {
+    let config = {
+      crossDomain: true,
+      headers: {
+        'x-api-key': 'lLB7po70xF5hYKJ2Gv2Mg5CNh4eG1zcoaRKWlZi0',
+        'cache-control': 'no-cache'
+      }
+    };
+
+    // Response to preflight request doesn't pass access control
+    // check: It does not have HTTP ok status.
+    axios
+      .get('https://api.craft-demo.net/pokemon/1', config)
+      .then(function(response) {
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
+
   render() {
     const { pokemon } = this.props;
 
     if (!pokemon) {
       return <div>Loading...</div>;
     }
-
-    console.log(pokemon);
 
     return (
       <div>
@@ -53,6 +76,7 @@ export class PokemonDetails extends React.Component {
               </div>
             </div>
           </div>
+          <GoogleMap />
         </div>
       </div>
     );
