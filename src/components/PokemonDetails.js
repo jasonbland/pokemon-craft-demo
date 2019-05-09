@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchPokemon } from '../actions';
 
-class PokemonDetails extends React.Component {
+export class PokemonDetails extends React.Component {
   render() {
     const { pokemon } = this.props;
 

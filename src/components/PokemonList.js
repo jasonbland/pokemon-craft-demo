@@ -1,14 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchPokemon } from '../actions';
-// import image from '../white-image.png';
 import Card from './Card';
 
 import 'semantic-ui-css/semantic.min.css';
-// import '../style/style.css';
-// import './App.css';
 
-class PokemonList extends React.Component {
+export class PokemonList extends React.Component {
   state = {
     start: 1,
     end: 20,
